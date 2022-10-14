@@ -1,4 +1,4 @@
-package se.kth.pellebe.eabraham.a.shapes; // TODO: Change to your package name
+package shapes.shapes; // TODO: Change to your package name
 
 import javafx.scene.paint.Color;
 
@@ -25,9 +25,7 @@ public class World {
         this.width = width;
         this.height = height;
 
-        shapes = new Shape[1]; // an array of references (change to non-zero size)
-        shapes[0] = new Line(0, 0, 100, 80, Color.RED);
-        shapes[0].setVelocity(20, 40);
+        shapes = new Shape[0]; // an array of references (change to non-zero size)
         // Create the actual Shape objects (sub types)
         // ....
     }
