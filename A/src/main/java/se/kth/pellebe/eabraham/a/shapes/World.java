@@ -30,10 +30,16 @@ public class World {
         shapes[0].setVelocity(20, 40);
         shapes[1] = new Circle(20, 100, 50, Color.BLUE);
         shapes[1].setVelocity(30, 30);
-        ((Circle) shapes[1]).setFilled(true);
+        //((Circle) shapes[1]).setFilled(true);
         shapes[2] = new Rectangle(0, 0, 40, 30, Color.GOLD);
         shapes[2].setVelocity(70, 80);
-        ((Rectangle) shapes[2]).setFilled(true);
+        //((Rectangle) shapes[2]).setFilled(true);
+        for(Shape s : shapes){
+            if(s instanceof FillableShape){
+                FillableShape fs = (FillableShape) s;
+                fs.setFilled(true);
+            }
+        }
         // Create the actual Shape objects (sub types)
         // ....
     }
