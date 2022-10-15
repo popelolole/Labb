@@ -1,4 +1,4 @@
-package ProjectApp;
+package model;
 
 public enum ProjectState {
     EMPTY("Empty"), ONGOING("Ongoing"), COMPLETED("Completed");

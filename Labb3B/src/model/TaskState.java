@@ -1,4 +1,4 @@
-package ProjectApp;
+package model;
 
 public enum TaskState {
     TO_DO("To do"), IN_PROGRESS("In progress"), DONE("Done");
