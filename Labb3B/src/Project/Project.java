@@ -28,6 +28,13 @@ public class Project implements Comparable<Project>, Serializable{
         created = LocalDate.now();
     }
 
+    public Task getTaskById(int id){
+        for(Task t : tasks){
+            if(t.getId() == id) return t;
+        }
+        return null;
+    }
+
     public Task addTask(String description, Prio prio){
         Task task = new Task(description, prio, ++nextTaskId);
         //task.setTakenBy("hej");

@@ -1,8 +1,6 @@
-import IO.ProjectsFileIO;
-import io.ProjectsFileIO;
-import model.Project;
-import model.ProjectsManager;
-import ui.MainUI;
+import IO.*;
+import Project.*;
+import UI.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -13,7 +11,6 @@ public class ProjectApp {
     private static final String FILE_NAME = "projects.ser";
 
     public void run() throws Exception { // we do not catch all exceptions
-
         File projectsFile = new File(FILE_NAME);
         ProjectsManager projectsManager = new ProjectsManager();
         boolean couldReadFile = false;

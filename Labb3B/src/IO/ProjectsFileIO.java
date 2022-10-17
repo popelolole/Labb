@@ -1,8 +1,9 @@
 package IO;
 
-import model.Project;
+import Project.*;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,6 +17,18 @@ public class ProjectsFileIO {
      * in serialized form.
      */
     public static void serializeToFile(File file, List<Project> data) throws IOException {
+        FileOutputStream fout = null;
+
+        try{
+            fout = new FileOutputStream(file);
+            ObjectOutputStream ous = new ObjectOutputStream(fout);
+
+            ous.writeObject(data);
+        }
+        finally{
+            if(fout != null) fout.close();
+        }
+
         // ...
         // and then, make sure the file always get closed
     }
@@ -26,6 +39,20 @@ public class ProjectsFileIO {
      */
     @SuppressWarnings("unchecked")
     public static List<Project> deSerializeFromFile(File file) throws IOException, ClassNotFoundException {
+        FileInputStream fin = null;
+        List<Project> projects;
+
+        try{
+            fin = new FileInputStream(file);
+            ObjectInputStream ois = new ObjectInputStream(fin);
+
+            projects = (List<Project>) ois.readObject();
+        }
+        finally{
+            if(fin != null) fin.close();
+        }
+
+        return projects;
         // ...
         // and then, make sure the file always get closed
     }

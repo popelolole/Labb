@@ -1,7 +1,6 @@
 package UI;
 
-import model.Project;
-import model.ProjectsManager;
+import Project.*;
 
 import java.util.List;
 import java.util.Scanner;

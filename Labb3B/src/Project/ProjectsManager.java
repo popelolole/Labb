@@ -9,6 +9,12 @@ public class ProjectsManager {
 
     public ProjectsManager(){
         this.nextProjectId = 1;
+        projects = new ArrayList<>();
+    }
+
+    public ArrayList<Project> getProjects(){
+        ArrayList copy = (ArrayList<Project>) projects.clone();
+        return copy;
     }
 
     public void setProjects(List<Project> incomingProjects) {

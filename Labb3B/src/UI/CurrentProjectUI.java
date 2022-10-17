@@ -1,9 +1,6 @@
 package UI;
 
-import model.matcher.AllTasksmatcher;
-import model.matcher.ITaskMatcher;
-import model.matcher.NotDoneMatcher;
-import model.matcher.PrioMatcher;
+import Project.*;
 import model.*;
 
 import java.util.List;
