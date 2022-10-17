@@ -30,6 +30,8 @@ public class Project implements Comparable<Project>, Serializable{
 
     public Task addTask(String description, Prio prio){
         Task task = new Task(description, prio, ++nextTaskId);
+        //task.setTakenBy("hej");
+        tasks.add(task);
         return task;
     }
 
@@ -66,7 +68,7 @@ public class Project implements Comparable<Project>, Serializable{
      */
 
     public List<Task> findTasks(ITaskMatcher matcher){
-        ArrayList<Task> list = new ArrayList<>();
+        List<Task> list = new ArrayList<>();
         for(int i = 0;i < tasks.size();i++){
             Task task = tasks.get(i);
             if(matcher.match(task)){
@@ -109,5 +111,21 @@ public class Project implements Comparable<Project>, Serializable{
     @Override
     public int compareTo(Project other) {
         return title.compareTo(other.title);
+    }
+
+    @Override
+    public String toString() {
+        String info = "Project:" +
+                "title='" + title + '\'' +
+                ", id=" + id +
+                ", description='" + description + '\'' +
+                ", created=" + created +
+                ", nextTaskId=" + nextTaskId +
+                ", tasks: \n[";
+
+        for(int i = 0;i < tasks.size();i++){
+            info += tasks.get(i).toString() + "\n";
+        }
+        return info + "]";
     }
 }

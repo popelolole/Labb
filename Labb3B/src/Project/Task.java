@@ -48,7 +48,7 @@ public class Task implements Comparable<Task>, Serializable {
     }
 
     public void setTakenBy(String takenBy) throws IllegalStateException{
-        if(takenBy != null) throw new IllegalStateException("Taken by " + takenBy);
+        if(this.takenBy != null) throw new IllegalStateException("Taken by " + this.takenBy);
         this.takenBy = takenBy;
         lastUpdate = LocalDate.now();
     }
@@ -77,5 +77,16 @@ public class Task implements Comparable<Task>, Serializable {
         if(prio.compareTo(other.prio) < 0) return -1;
         else if(prio.compareTo(other.prio) > 0) return 1;
         return description.compareTo(other.description);
+    }
+
+    @Override
+    public String toString() {
+        return "Task: " +
+                "description='" + description + '\'' +
+                ", id=" + id +
+                ", takenBy='" + takenBy + '\'' +
+                ", state=" + state +
+                ", lastUpdate=" + lastUpdate +
+                ", prio=" + prio;
     }
 }
