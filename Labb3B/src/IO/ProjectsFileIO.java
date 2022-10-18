@@ -26,11 +26,8 @@ public class ProjectsFileIO {
             ous.writeObject(data);
         }
         finally{
-            if(fout != null) fout.close();
+            if (fout != null) fout.close();
         }
-
-        // ...
-        // and then, make sure the file always get closed
     }
 
     /**
@@ -49,12 +46,10 @@ public class ProjectsFileIO {
             projects = (List<Project>) ois.readObject();
         }
         finally{
-            if(fin != null) fin.close();
+            if (fin != null) fin.close();
         }
 
         return projects;
-        // ...
-        // and then, make sure the file always get closed
     }
 
     private ProjectsFileIO() {}

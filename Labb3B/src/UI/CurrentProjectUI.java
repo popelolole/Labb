@@ -46,13 +46,17 @@ class CurrentProjectUI {
                     viewTasks(new NotDoneMatcher());
                     break;
                 case 'H':
-                    viewTasks(new PrioMatcher(Prio.High));
+                    Prio prio = searchPrio();
+                    if(prio != null) viewTasks(new PrioMatcher(prio));
                     break;
                 case 'A':
                     addTask();
                     break;
                 case 'U':
                     updateTask();
+                    break;
+                case 'S':
+                    currentProject.setTasks(currentProject.sortTasks(currentProject.getTasks()));
                     break;
                 case 'X':
                     break;
@@ -64,7 +68,7 @@ class CurrentProjectUI {
     }
 
     private void viewTasks(ITaskMatcher matcher) {
-        System.out.println(currentProject.toString());
+        System.out.println(currentProject.toString() + "\n\nResults:");
         List<Task> tasks = currentProject.findTasks(matcher);
         printTasks(tasks);
     }
@@ -84,17 +88,33 @@ class CurrentProjectUI {
         scan.nextLine(); //remove "new line" from scanner buffer
         Task task = currentProject.getTaskById(id);
         if (task != null) {
-            System.out.println(task);
-            System.out.print("New state (T)odo (D)one? ");
-            char stateChar = InputUtils.scanAndReturnFirstChar(scan);
-            if (stateChar == 'T') {
-                System.out.print("Taken by (name or email address)? ");
-                String emailStr = scan.nextLine();
-                task.setState(TaskState.TO_DO);
-                task.setTakenBy(emailStr);
-            }
-            else if(stateChar == ('D')) {
-                task.setState(TaskState.DONE);
+            boolean close = false;
+            while(!close) {
+                printUpdateTask(task);
+                char choice = InputUtils.scanAndReturnFirstChar(scan);
+                switch (choice) {
+                    case 'S':
+                        System.out.print("New state (T)odo (D)one? ");
+                        char stateChar = InputUtils.scanAndReturnFirstChar(scan);
+                        if (stateChar == 'T') task.setState(TaskState.TO_DO);
+                        else if (stateChar == 'D') task.setState(TaskState.DONE);
+                        break;
+                    case 'P':
+                        System.out.println("New priority (L)ow (M)edium or (H)igh");
+                        char prioChar = InputUtils.scanAndReturnFirstChar(scan);
+                        if (prioChar == 'L') task.setPrio(Prio.Low);
+                        else if (prioChar == 'M') task.setPrio(Prio.Medium);
+                        else if (prioChar == 'H') task.setPrio(Prio.High);
+                        break;
+                    case 'T':
+                        if (task.getTakenBy() != null) {System.out.println("Task already taken. "); break;}
+                        System.out.println("Taken by (name or email address)? ");
+                        String emailStr = scan.nextLine();
+                        task.setTakenBy(emailStr);
+                        break;
+                    default:
+                        close = true;
+                }
             }
         } else {
             System.out.println("Id not found.");
@@ -105,9 +125,10 @@ class CurrentProjectUI {
         System.out.println("--- Manage " + currentProject.getTitle() + " ---");
         System.out.println("T - list tasks taken by ...");
         System.out.println("N - list tasks not done");
-        System.out.println("H - list high priority tasks");
+        System.out.println("H - list tasks after priority");
         System.out.println("A - add task");
         System.out.println("U - update task");
+        System.out.println("S - sort tasks (after priority)");
         System.out.println("X - exit project menu");
         System.out.println("----------");
     }
@@ -119,6 +140,32 @@ class CurrentProjectUI {
             for (Task task : tasks) {
                 System.out.println(task.toString());
             }
+        }
+    }
+
+    private void printUpdateTask(Task task){
+        System.out.println(task);
+        System.out.println("--- Update task " + task.getId() + " ---");
+        System.out.println("S - Change state");
+        System.out.println("P - Change priority");
+        System.out.println("T - Change taken by");
+        System.out.println("X - Exit task menu");
+        System.out.println("----------");
+    }
+
+    private Prio searchPrio(){
+        System.out.println("Priority (L)ow, (M)edium or (H)igh?");
+        char choice = InputUtils.scanAndReturnFirstChar(scan);
+        switch(choice){
+            case 'L':
+                return Prio.Low;
+            case 'M':
+                return Prio.Medium;
+            case 'H':
+                return Prio.High;
+            default:
+                System.out.println("Invalid Character");
+                return null;
         }
     }
 }

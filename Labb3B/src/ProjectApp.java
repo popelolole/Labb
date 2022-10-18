@@ -4,6 +4,7 @@ import UI.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 public class ProjectApp {
@@ -29,6 +30,8 @@ public class ProjectApp {
         } catch (FileNotFoundException | ClassNotFoundException e) {
             System.out.println("Could not load projects from file, please check the data file.");
             System.out.println("Continuing with empty manager.");
+        } catch(IOException e){
+            throw new RuntimeException();
         }
 
         // run method about to exit - save data

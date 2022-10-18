@@ -23,7 +23,7 @@ public class Project implements Comparable<Project>, Serializable{
         this.title = title;
         this.description = description;
         this.id = id;
-        nextTaskId = 0;
+        nextTaskId = 1;
         tasks = new ArrayList<>();
         created = LocalDate.now();
     }
@@ -36,8 +36,7 @@ public class Project implements Comparable<Project>, Serializable{
     }
 
     public Task addTask(String description, Prio prio){
-        Task task = new Task(description, prio, ++nextTaskId);
-        //task.setTakenBy("hej");
+        Task task = new Task(description, prio, nextTaskId++);
         tasks.add(task);
         return task;
     }
@@ -67,6 +66,12 @@ public class Project implements Comparable<Project>, Serializable{
         return copy;
     }
 
+    public void setTasks(List<Task> incomingTasks){
+        tasks.clear();
+        tasks.addAll(incomingTasks);
+        nextTaskId = tasks.size() + 1;
+    }
+
     /**
      * Creates a list of tasks that matches a certain criteria.
      *
@@ -82,11 +87,14 @@ public class Project implements Comparable<Project>, Serializable{
                 list.add(task);
             }
         }
+        return sortTasks(list);
+    }
 
+    public List<Task> sortTasks(List<Task> list){
         Task tmp;
         for(int i = 0;i < list.size();i++){
-            for(int j = 1;j < list.size() - 1;j++){
-                if(list.get(j - 1).getId() > list.get(j).getId()) {
+            for(int j = 1;j < list.size();j++){
+                if(list.get(j - 1).compareTo(list.get(j)) < 0) {
                     tmp = list.get(j - 1);
                     list.set(j-1, list.get(j));
                     list.set(j, tmp);
@@ -122,16 +130,16 @@ public class Project implements Comparable<Project>, Serializable{
 
     @Override
     public String toString() {
-        String info = "Project:" +
-                "title='" + title + '\'' +
-                ", id=" + id +
-                ", description='" + description + '\'' +
-                ", created=" + created +
-                ", nextTaskId=" + nextTaskId +
-                ", tasks: \n[";
+        String info = "Project: " +
+                "title: '" + title + '\'' +
+                ", id: " + id +
+                ", description: '" + description + '\'' +
+                ", created: " + created +
+                ", \nTasks: \n[";
 
         for(int i = 0;i < tasks.size();i++){
-            info += tasks.get(i).toString() + "\n";
+            info += tasks.get(i).toString();
+            if(i != tasks.size() - 1) info += "\n";
         }
         return info + "]";
     }
