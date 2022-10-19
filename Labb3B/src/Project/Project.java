@@ -123,6 +123,17 @@ public class Project implements Comparable<Project>, Serializable{
         return latestdate;
     }
 
+    public boolean removeTask(Task task) {
+        for(int i=0;i<tasks.size();i++) {
+            if(tasks.get(i).getId() == task.getId()) {
+                tasks.remove(task);
+                nextTaskId--;
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public int compareTo(Project other) {
         return title.compareTo(other.title);

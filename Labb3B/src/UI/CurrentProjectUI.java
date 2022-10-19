@@ -58,6 +58,15 @@ class CurrentProjectUI {
                 case 'S':
                     currentProject.setTasks(currentProject.sortTasks(currentProject.getTasks()));
                     break;
+                case 'R':
+                    System.out.println("Enter task id: ");
+                    int TaskId = scan.nextInt();
+                    Task theTask = currentProject.getTaskById(TaskId);
+                    if(theTask != null && currentProject.removeTask(theTask)) {
+                        System.out.println("Task successfully removed");
+                    }
+                    else System.out.println("Task doesn't exist");
+                    break;
                 case 'X':
                     break;
                 default:
@@ -129,6 +138,7 @@ class CurrentProjectUI {
         System.out.println("A - add task");
         System.out.println("U - update task");
         System.out.println("S - sort tasks (after priority)");
+        System.out.println("R - remove task");
         System.out.println("X - exit project menu");
         System.out.println("----------");
     }

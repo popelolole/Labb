@@ -41,6 +41,11 @@ public class MainUI {
                     break;
                 case 'X':
                     break;
+                case 'R':
+                    System.out.println("Enter id: ");
+                    int projectId = scan.nextInt();
+                    manager.removeProject(manager.getProjectById(projectId));
+                    break;
                 default:
                     System.out.println("Unknown command");
             }
@@ -93,6 +98,7 @@ public class MainUI {
         System.out.println("F - find project");
         System.out.println("A - add project");
         System.out.println("M - manage project");
+        System.out.println("R - remove project");
         System.out.println("X - exit");
         System.out.println("----------");
     }
