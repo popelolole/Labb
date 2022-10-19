@@ -44,6 +44,7 @@ public class MainUI {
                 case 'R':
                     System.out.println("Enter id: ");
                     int projectId = scan.nextInt();
+                    scan.nextLine();
                     manager.removeProject(manager.getProjectById(projectId));
                     break;
                 default:

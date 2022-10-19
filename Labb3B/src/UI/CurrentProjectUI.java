@@ -61,6 +61,7 @@ class CurrentProjectUI {
                 case 'R':
                     System.out.println("Enter task id: ");
                     int TaskId = scan.nextInt();
+                    scan.nextLine();
                     Task theTask = currentProject.getTaskById(TaskId);
                     if(theTask != null && currentProject.removeTask(theTask)) {
                         System.out.println("Task successfully removed");
