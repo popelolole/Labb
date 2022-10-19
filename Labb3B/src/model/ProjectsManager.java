@@ -1,8 +1,17 @@
-package Project;
+package model;
+
+import model.exceptions.TitleNotUniqueException;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class represents logic and data for a Project Manager, used to handle Projects.
+ * A Project Manager contains a list of projects and an integer used to hand out Ids to projects.
+ *
+ * @author Pelle Berggren, pellebe@kth.se
+ * @author Elias Abraham, eabraham@kth.se
+ */
 public class ProjectsManager {
     private int nextProjectId;
     private ArrayList<Project> projects;
@@ -30,7 +39,7 @@ public class ProjectsManager {
         return true;
     }
 
-    public Project addProject(String title, String description){
+    public Project addProject(String title, String description) throws TitleNotUniqueException {
         if(!isTitleUnique(title)) throw new TitleNotUniqueException("Title already exists.");
         Project p = new Project(title, description, nextProjectId++);
         projects.add(p);

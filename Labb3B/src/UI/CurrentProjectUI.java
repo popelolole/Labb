@@ -1,7 +1,8 @@
 package UI;
 
-import Project.*;
 import model.*;
+import model.enums.*;
+import model.matcher.*;
 
 import java.util.List;
 import java.util.Scanner;
@@ -56,7 +57,8 @@ class CurrentProjectUI {
                     updateTask();
                     break;
                 case 'S':
-                    currentProject.setTasks(currentProject.sortTasks(currentProject.getTasks()));
+                    currentProject.sortTasks();
+                    System.out.println(currentProject.toString());
                     break;
                 case 'R':
                     System.out.println("Enter task id: ");

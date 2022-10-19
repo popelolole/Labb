@@ -1,23 +1,27 @@
-package Project;
+package model;
 
-import model.Prio;
-import model.ProjectState;
-import model.TaskState;
+import model.enums.*;
+import model.matcher.ITaskMatcher;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
+
+/**
+ * This class represents logic and data for a Project, used to handle objects of type Task.
+ * A Project contains information about the project, and a list of tasks.
+ *
+ * @author Pelle Berggren, pellebe@kth.se
+ * @author Elias Abraham, eabraham@kth.se
+ */
 
 public class Project implements Comparable<Project>, Serializable{
-    private String title;
-    private int id;
-    private String description;
-    private LocalDate created;
+    private final String title;
+    private final int id;
+    private final String description;
+    private final LocalDate created;
     private int nextTaskId;
-    private ArrayList<Task> tasks;
+    private final ArrayList<Task> tasks;
 
     Project(String title, String description, int id){
         this.title = title;
@@ -66,14 +70,9 @@ public class Project implements Comparable<Project>, Serializable{
         return copy;
     }
 
-    public void setTasks(List<Task> incomingTasks){
-        tasks.clear();
-        tasks.addAll(incomingTasks);
-        nextTaskId = tasks.size() + 1;
-    }
-
     /**
      * Creates a list of tasks that matches a certain criteria.
+     * Also sorts the list.
      *
      * @param matcher the criteria to match after.
      * @return a list of tasks that match the criteria.
@@ -81,28 +80,28 @@ public class Project implements Comparable<Project>, Serializable{
 
     public List<Task> findTasks(ITaskMatcher matcher){
         List<Task> list = new ArrayList<>();
-        for(int i = 0;i < tasks.size();i++){
-            Task task = tasks.get(i);
+        for(Task task : tasks){
             if(matcher.match(task)){
                 list.add(task);
             }
         }
-        return sortTasks(list);
-    }
-
-    public List<Task> sortTasks(List<Task> list){
-        Task tmp;
-        for(int i = 0;i < list.size();i++){
-            for(int j = 1;j < list.size();j++){
-                if(list.get(j - 1).compareTo(list.get(j)) < 0) {
-                    tmp = list.get(j - 1);
-                    list.set(j-1, list.get(j));
-                    list.set(j, tmp);
-                }
-            }
-        }
+        sortTasks(list);
         return list;
     }
+
+    public void sortTasks(List<Task> list){
+        Collections.sort(list, Collections.reverseOrder());
+    }
+    public void sortTasks(){
+        sortTasks(tasks);
+    }
+
+    /**
+     * Calculates and returns current state of the project.
+     * The project is considered ongoing if all tasks are not done.
+     *
+     * @return a value of enum ProjectState, depending on if the project is empty, ongoing or completed.
+     */
 
     public ProjectState getState(){
         if(tasks.isEmpty()) return ProjectState.EMPTY;
@@ -112,12 +111,19 @@ public class Project implements Comparable<Project>, Serializable{
         return ProjectState.COMPLETED;
     }
 
+    /**
+     * Gets the date at which any task in the project was last updated.
+     * If the project has no tasks, the creation date of the project counts as latest update.
+     *
+     * @return a LocalDate value of the latest update.
+     */
     public LocalDate getLastUpdated(){
         if(tasks.isEmpty()) return created;
 
         LocalDate latestdate = tasks.get(0).getLastUpdate();
+        LocalDate date;
         for(int i = 1;i < tasks.size();i++){
-            LocalDate date = tasks.get(i).getLastUpdate();
+            date = tasks.get(i).getLastUpdate();
             if(!latestdate.isAfter(date)) latestdate = date;
         }
         return latestdate;
@@ -136,7 +142,16 @@ public class Project implements Comparable<Project>, Serializable{
 
     @Override
     public int compareTo(Project other) {
-        return title.compareTo(other.title);
+        return title.toUpperCase().compareTo(other.title.toUpperCase());
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if(o instanceof Project){
+            Project otherProject = (Project) o;
+            return this.compareTo(otherProject) == 0;
+        }
+        return false;
     }
 
     @Override

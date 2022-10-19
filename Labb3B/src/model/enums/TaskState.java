@@ -1,4 +1,4 @@
-package model;
+package model.enums;
 
 public enum TaskState {
     TO_DO("To do"), IN_PROGRESS("In progress"), DONE("Done");

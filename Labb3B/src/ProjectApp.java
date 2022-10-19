@@ -1,6 +1,6 @@
 import IO.*;
-import Project.*;
 import UI.*;
+import model.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -30,8 +30,8 @@ public class ProjectApp {
         } catch (FileNotFoundException | ClassNotFoundException e) {
             System.out.println("Could not load projects from file, please check the data file.");
             System.out.println("Continuing with empty manager.");
-        } catch(IOException e){
-            throw new RuntimeException();
+        } catch(IOException io){
+            throw new IOException(io);
         }
 
         // run method about to exit - save data

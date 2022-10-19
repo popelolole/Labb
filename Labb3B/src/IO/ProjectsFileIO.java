@@ -1,14 +1,15 @@
 package IO;
 
-import Project.*;
+import model.Project;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Hints on how to implement serialization and deserialization
- * of lists of projects and users.
+ * This class implements serialization and deserialization of Projects.
+ *
+ * @author Pelle Berggren, pellebe@kth.se
+ * @author Elias Abraham, eabraham@kth.se
  */
 public class ProjectsFileIO {
 
