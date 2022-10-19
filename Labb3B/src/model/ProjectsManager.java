@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class ProjectsManager {
     private int nextProjectId;
-    private ArrayList<Project> projects;
+    private final ArrayList<Project> projects;
 
     public ProjectsManager(){
         this.nextProjectId = 1;
