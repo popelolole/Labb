@@ -19,13 +19,13 @@ public class SquareMatrix {
         return copy;
     }
 
-    public void intMatrixToSquareMatrix(int[][] intMatrix) {
+    /*public void intMatrixToSquareMatrix(int[][] intMatrix) {
         for(int row = 0;row < GRID_SIZE;row++){
             for(int col = 0;col < GRID_SIZE;col++){
                 squares[row][col] = new Square(intMatrix[row][col]);
             }
         }
-    }
+    }*/
 
     public Square getSquare(int row, int col){
         return squares[row][col];
@@ -34,8 +34,18 @@ public class SquareMatrix {
     public boolean setSquare(int row, int col, int value){
         Square s = squares[row][col];
         s.isLegalValue(value);
-        if(s.isVisible()) return false;
+        if(!s.isChangeable()) return false;
         s.setSquareValue(value);
         return true;
+    }
+
+    public int getNrOfNotChangeable(){
+        int number = 0;
+        for(int row = 0;row < GRID_SIZE;row++){
+            for(int col = 0;col < GRID_SIZE;col++){
+                if(!squares[row][col].isChangeable()) number++;
+            }
+        }
+        return number;
     }
 }

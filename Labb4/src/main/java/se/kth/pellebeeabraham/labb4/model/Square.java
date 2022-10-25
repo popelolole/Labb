@@ -2,15 +2,15 @@ package se.kth.pellebeeabraham.labb4.model;
 
 public class Square {
     private int squareValue;
-    private final boolean visible;
+    private final boolean changeable;
 
     public Square(int squareValue) throws IllegalArgumentException{
         isLegalValue(squareValue);
         this.squareValue = squareValue;
         if(squareValue != 0){
-            visible = true;
+            changeable = false;
         }
-        else visible = false;
+        else changeable = true;
     }
 
     public int getSquareValue() {
@@ -21,8 +21,8 @@ public class Square {
         this.squareValue = squareValue;
     }
 
-    public boolean isVisible() {
-        return visible;
+    public boolean isChangeable() {
+        return changeable;
     }
 
     public void isLegalValue(int value) throws IllegalArgumentException{

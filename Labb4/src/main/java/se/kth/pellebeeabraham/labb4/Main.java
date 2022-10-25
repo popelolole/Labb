@@ -1,28 +1,46 @@
 package se.kth.pellebeeabraham.labb4;
 
-import se.kth.pellebeeabraham.labb4.model.*;
+import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Point2D;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import se.kth.pellebeeabraham.labb4.model.Line;
+import se.kth.pellebeeabraham.labb4.model.Lines;
+import se.kth.pellebeeabraham.labb4.view.ScribbleView;
 
-import static se.kth.pellebeeabraham.labb4.model.SudokuUtilities.GRID_SIZE;
+import java.util.List;
 
-public class Main {
+public class Main extends Application {
+
+    private Lines model;
+    @Override
+    public void start(Stage primaryStage) {
+
+        model = new Lines();
+        ScribbleView view = new ScribbleView(model);
+
+        Scene scene = new Scene(view);
+        primaryStage.setScene(scene);
+        primaryStage.sizeToScene();
+        primaryStage.setResizable(false);
+
+        primaryStage.setTitle("Hello JavaFX!");
+        primaryStage.show();
+    }
+
     public static void main(String[] args) {
-
-        SquareMatrix sm = new SquareMatrix();
-
-        int[][][] values = SudokuUtilities.generateSudokuMatrix(SudokuUtilities.SudokuLevel.EASY);
-        int[][] startMatrix = new int[GRID_SIZE][GRID_SIZE];
-        int[][] resultMatrix = new int[GRID_SIZE][GRID_SIZE];
-        for(int row = 0;row < GRID_SIZE;row++){
-            for(int col = 0;col < GRID_SIZE;col++){
-                startMatrix[row][col] = values[row][col][0];
-            }
-        }
-        for(int row = 0;row < GRID_SIZE;row++){
-            for(int col = 0;col < GRID_SIZE;col++){
-                resultMatrix[row][col] = values[row][col][1];
-            }
-        }
-        sm.intMatrixToSquareMatrix(startMatrix);
-        sm.getSquareMatrix();
+        launch(args);
     }
 }
