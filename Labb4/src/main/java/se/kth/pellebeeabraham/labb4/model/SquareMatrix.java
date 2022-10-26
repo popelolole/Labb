@@ -1,5 +1,6 @@
 package se.kth.pellebeeabraham.labb4.model;
 
+import static se.kth.pellebeeabraham.labb4.model.Square.isLegalValue;
 import static se.kth.pellebeeabraham.labb4.model.SudokuUtilities.GRID_SIZE;
 
 public class SquareMatrix {
@@ -32,10 +33,15 @@ public class SquareMatrix {
     }
 
     public boolean setSquare(int row, int col, int value){
+        isLegalValue(value);
         Square s = squares[row][col];
-        s.isLegalValue(value);
-        if(!s.isChangeable()) return false;
-        s.setSquareValue(value);
+        if(s == null){
+            squares[row][col] = new Square(value);
+        }
+        else{
+            if (!s.isChangeable()) return false;
+            s.setSquareValue(value);
+        }
         return true;
     }
 

@@ -1,5 +1,7 @@
 package se.kth.pellebeeabraham.labb4.model;
 
+import java.util.Random;
+
 public class SudokuUtilities {
 
     public enum SudokuLevel {EASY, MEDIUM, HARD}
@@ -26,7 +28,52 @@ public class SudokuUtilities {
             case HARD: representationString = hard; break;
             default: representationString = medium;
         }
-        return convertStringToIntMatrix(representationString);
+        return generateUniqueSolution(convertStringToIntMatrix(representationString));
+    }
+
+    public static int[][][] generateUniqueSolution(int[][][] intMatrix){
+        int number1, number2;
+        Random rand = new Random();
+        do{
+            number1 = rand.nextInt(9) + 1;
+            number2 = rand.nextInt(9) + 1;
+
+        }while(number1 == number2);
+        System.out.println(number1);
+        System.out.println(number2);
+        int value;
+
+        for(int row = 0;row < GRID_SIZE;row++){
+            for(int col = 0;col < GRID_SIZE;col++){
+                for (int i = 0;i < 2;i++){
+                    value = intMatrix[row][col][i];
+                    if (value == number1)
+                        intMatrix[row][col][i] = number2;
+                    else if (value == number2)
+                        intMatrix[row][col][i] = number1;
+                }
+            }
+        }
+
+        int[][][] reverseCopy = new int[GRID_SIZE][GRID_SIZE][2];
+        int row2 = 0;
+        int col2 = 0;
+
+        if(rand.nextInt(2)+1 == 2) {
+            for (int row = GRID_SIZE - 1; row >= 0; row--) {
+                for (int col = GRID_SIZE - 1; col >= 0; col--) {
+                    for (int i = 0; i < 2; i++) {
+                        value = intMatrix[row][col][i];
+                        reverseCopy[row2][col2][i] = value;
+                    }
+                    col2++;
+                }
+                row2++;
+                col2 = 0;
+            }
+            return reverseCopy;
+        }
+        return intMatrix;
     }
 
     /**

@@ -64,6 +64,16 @@ public class MatrixHandler {
         return copy;
     }
 
+    public SquareMatrix getResultMatrix(){
+        SquareMatrix copy = new SquareMatrix();
+        for(int row = 0;row < GRID_SIZE;row++){
+            for(int col = 0;col < GRID_SIZE;col++){
+                copy.setSquare(row, col, resultMatrix.getSquare(row, col).getSquareValue());
+            }
+        }
+        return copy;
+    }
+
     public boolean isGameOver(){
         if(nrOfMoves < GRID_SIZE * GRID_SIZE) return false;
         return true;

@@ -25,7 +25,7 @@ public class Square {
         return changeable;
     }
 
-    public void isLegalValue(int value) throws IllegalArgumentException{
+    public static void isLegalValue(int value) throws IllegalArgumentException{
         if(value < 0 || value > 9) throw new
                 IllegalArgumentException("Illegal squareValue: " + value);
     }
