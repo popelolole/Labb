@@ -1,5 +1,7 @@
 package se.kth.pellebeeabraham.labb4.model;
 
+import java.util.Random;
+
 import static se.kth.pellebeeabraham.labb4.model.SudokuUtilities.GRID_SIZE;
 import static se.kth.pellebeeabraham.labb4.model.SudokuUtilities.generateSudokuMatrix;
 
@@ -88,14 +90,38 @@ public class MatrixHandler {
         return true;
     }
 
-    public boolean isSolved(){
+    //TODO: make separate method for checking isCorrectSoFar, checking if all moves are allowed
+    public boolean isCorrect(){
         for(int row = 0;row < GRID_SIZE;row++){
             for(int col = 0;col < GRID_SIZE;col++){
                 if(playMatrix.getSquare(row, col).getSquareValue() !=
-                        resultMatrix.getSquare(row,col).getSquareValue())
-                    return false;
+                        resultMatrix.getSquare(row,col).getSquareValue()) {
+                    if(playMatrix.getSquare(row, col).getSquareValue() != 0) {
+                        return false;
+                    }
+                }
             }
         }
         return true;
+    }
+
+    public void giveHint(){
+        int nrOfZeros = 0;
+        for(int row = 0;row < GRID_SIZE;row++){
+            for(int col = 0;col < GRID_SIZE;col++){
+                if(playMatrix.getSquare(row, col).getSquareValue() == 0) nrOfZeros++;
+            }
+        }
+        Random rand = new Random();
+        int number = rand.nextInt(nrOfZeros) + 1;
+        for(int row = 0;row < GRID_SIZE;row++){
+            for(int col = 0;col < GRID_SIZE;col++){
+                if(playMatrix.getSquare(row, col).getSquareValue() == 0) number--;
+                if(number == 0){
+                    addNumberToSquare(row, col, resultMatrix.getSquare(row, col).getSquareValue());
+                    return;
+                }
+            }
+        }
     }
 }

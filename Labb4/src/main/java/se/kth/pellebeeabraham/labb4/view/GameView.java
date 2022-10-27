@@ -14,18 +14,26 @@ public class GameView extends BorderPane {
     private VBox numberButtonPane;
     private Button[] numberButtons;
     private GridView gridPane;
+    private Button[] gameButtons;
     private VBox gameButtonPane;
     private MatrixHandler matrixHandler;
 
     public GameView(MatrixHandler matrixHandler){
+        this.matrixHandler = matrixHandler;
+
         gridPane = new GridView(matrixHandler);
         this.setCenter(gridPane);
 
         numberButtons = new Button[10];
 
         numberButtonPane = new VBox();
-        numberButtonPane = makeNumberButtonPane();
+        makeNumberButtonPane();
         this.setRight(numberButtonPane);
+
+        gameButtons = new Button[2];
+        gameButtonPane = new VBox();
+        makeGameButtonPane();
+        this.setLeft(gameButtonPane);
     }
 
     private VBox makeNumberButtonPane(){
@@ -46,6 +54,21 @@ public class GameView extends BorderPane {
         return numberButtonPane;
     }
 
+    private VBox makeGameButtonPane(){
+        gameButtons[0] = new Button("Check");
+        gameButtons[1] = new Button("Hint");
+
+        for(int i = 0;i < 2;i++){
+            gameButtonPane.getChildren().add(gameButtons[i]);
+            gameButtons[i].addEventHandler(ActionEvent.ACTION, gameButtonHandler);
+        }
+        gameButtonPane.setAlignment(Pos.CENTER);
+        gameButtonPane.setPadding(new Insets(5));
+        gameButtonPane.setSpacing(10);
+        return gameButtonPane;
+    }
+
+    //TODO: make addEventHandlers method
     private EventHandler<ActionEvent> numberButtonHandler = new EventHandler<ActionEvent>(){
         @Override
         public void handle(ActionEvent event) {
@@ -54,6 +77,23 @@ public class GameView extends BorderPane {
                 if(button == numberButtons[i]) gridPane.setNumber(i + 1);
             }
             if(button == numberButtons[9]) gridPane.setClear(true);
+        }
+    };
+
+    private EventHandler<ActionEvent> gameButtonHandler = new EventHandler<ActionEvent>(){
+        @Override
+        public void handle(ActionEvent event) {
+            System.out.println("check1");
+            Button button = (Button) event.getSource();
+            if(button == gameButtons[0]) {
+                System.out.println("check2");
+                System.out.println(matrixHandler.isCorrect());
+            }
+            else if(button == gameButtons[1]) {
+                System.out.println("check3");
+                matrixHandler.giveHint();
+                gridPane.update();
+            }
         }
     };
 }

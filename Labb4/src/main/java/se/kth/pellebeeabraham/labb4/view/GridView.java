@@ -38,15 +38,8 @@ public class GridView extends Pane {
 
     // called by constructor (only)
     private final void initNumberTiles() {
-        Font font1 = Font.font("Monospaced", FontWeight.NORMAL, 20);
-        Font font2 = Font.font("Monospaced", FontWeight.BOLD, 20);
+        Font font = Font.font("Monospaced", FontWeight.BOLD, 20);
 
-        for(int row2 = 0;row2 < 9;row2++) {
-            for(int col2 = 0;col2 < 9;col2++){
-                System.out.print(matrixHandler.getPlayMatrix().getSquare(row2, col2).getSquareValue());
-            }
-            System.out.print("\n");
-        }
         for (int row = 0; row < GRID_SIZE; row++) {
             for (int col = 0; col < GRID_SIZE; col++) {
                 Label tile;
@@ -56,21 +49,13 @@ public class GridView extends Pane {
                 else tile = new Label("");
                 tile.setPrefWidth(32);
                 tile.setPrefHeight(32);
-                /*if(matrixHandler.getPlayMatrix().getSquare(row, col).isChangeable())
-                    tile.setFont(font1);
-                else */tile.setFont(font2);
+                tile.setFont(font);
                 tile.setAlignment(Pos.CENTER);
                 tile.setStyle("-fx-border-color: black; -fx-border-width: 0.5px;"); // css style
                 tile.addEventHandler(MouseEvent.MOUSE_CLICKED, tileClickHandler);
-                //tile.setOnMouseClicked(tileClickHandler); // add your custom event handler
                 // add new tile to grid
                 tile.setId("" + row + col);
-                /*tile.textProperty().addListener(new ChangeListener<String>() {
-                    @Override
-                    public void changed(ObservableValue<? extends String> ov, String t, String t1) {
-                        System.out.println("Label Text Changed");
-                    }
-                });*/
+
                 numberTiles[row][col] = tile;
             }
         }
@@ -129,6 +114,12 @@ public class GridView extends Pane {
                 numberTiles[row][col].addEventHandler(MouseEvent.MOUSE_CLICKED, tileClickHandler);
             }
         }
+        for(int row2 = 0;row2 < 9;row2++) {
+            for(int col2 = 0;col2 < 9;col2++){
+                System.out.print(matrixHandler.getResultMatrix().getSquare(row2, col2).getSquareValue());
+            }
+            System.out.print("\n");
+        }
     }
 
     public int getNumber() {
@@ -147,6 +138,7 @@ public class GridView extends Pane {
         this.clear = clear;
     }
 
+    //TODO: make addEventHandlers method, make controller
     private EventHandler<MouseEvent> tileClickHandler = new EventHandler<MouseEvent>() {
         @Override
         public void handle(MouseEvent event) {
