@@ -43,6 +43,10 @@ public class GameView extends BorderPane {
         return gridPane;
     }
 
+    /**
+     * This method creates the number buttons on the right side of the sudoku window.
+     * @returns the VBox with numbers buttons as chilren.
+     */
     private VBox makeNumberButtonPane(){
         for(int i = 0;i < 9;i++){
             numberButtons[i] = new Button("" + (i + 1));
@@ -75,17 +79,16 @@ public class GameView extends BorderPane {
         return gameButtonPane;
     }
 
-    //TODO: make addEventHandlers method
     private EventHandler<ActionEvent> numberButtonHandler = new EventHandler<ActionEvent>(){
         @Override
         public void handle(ActionEvent event) {
             Button button = (Button) event.getSource();
             for(int i = 0;i < 9;i++){
                 if(button == numberButtons[i])
-                    controller.handleSetNumber(i + 1);// gridPane.setNumber(i + 1);
+                    controller.handleSetNumber(i + 1);
             }
             if(button == numberButtons[9])
-                controller.handleSetClear();// gridPane.setClear(true);
+                controller.handleSetClear();
         }
     };
 

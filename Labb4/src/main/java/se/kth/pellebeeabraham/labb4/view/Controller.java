@@ -17,7 +17,6 @@ public class Controller {
     private SudokuView mainView;
     private GameView gameView;
     private GridView gridView;
-    private Stage primaryStage;
     private File sudokuFile;
 
     public Controller(MatrixHandler model, SudokuView mainView){

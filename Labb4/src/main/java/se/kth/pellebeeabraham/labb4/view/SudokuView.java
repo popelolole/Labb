@@ -48,7 +48,6 @@ public class SudokuView extends VBox {
         alert.show();
     }
 
-    //TODO: add controller
     private void createMenuBar(){
         Menu fileMenu = new Menu("File");
         MenuItem loadItem = new MenuItem("Load Game");
