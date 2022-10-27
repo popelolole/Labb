@@ -114,6 +114,7 @@ public class MatrixHandler implements Serializable {
                 if(playMatrix.isChangeable(row, col)) playMatrix.setSquare(row, col, 0);
             }
         }
+        nrOfMoves = playMatrix.getNrOfNotChangeable();
     }
 
     public boolean isGameOver(){

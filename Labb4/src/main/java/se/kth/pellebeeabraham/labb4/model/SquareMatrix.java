@@ -2,7 +2,6 @@ package se.kth.pellebeeabraham.labb4.model;
 
 import java.io.Serializable;
 
-import static se.kth.pellebeeabraham.labb4.model.Square.isLegalValue;
 import static se.kth.pellebeeabraham.labb4.model.SudokuUtilities.GRID_SIZE;
 
 /**
@@ -37,7 +36,6 @@ public class SquareMatrix implements Serializable {
     }
 
     public boolean setSquare(int row, int col, int value){
-        isLegalValue(value);
         Square s = getSquare(row, col);
         if (!changeableMatrix[row][col]) return false;
         s.setSquareValue(value);
@@ -45,7 +43,6 @@ public class SquareMatrix implements Serializable {
     }
 
     public void createSquare(int row, int col, int value){
-        isLegalValue(value);
         squares[row][col] = new Square(value);
     }
 
