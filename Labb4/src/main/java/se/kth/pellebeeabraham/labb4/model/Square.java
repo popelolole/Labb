@@ -4,7 +4,8 @@ import java.io.Serializable;
 
 /**
  * This class represents a one square in a sudoku game,
- * it contains the chosen value.
+ * it contains the chosen value and information of whether
+ * the square is allowed to have its value changed or not.
  *
  * @author Pelle Berggren, pellebe@kth.se
  * @author Elias Abraham, eabraham@kth.se
