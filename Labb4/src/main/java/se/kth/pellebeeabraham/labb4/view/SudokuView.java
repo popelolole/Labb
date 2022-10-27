@@ -62,7 +62,7 @@ public class SudokuView extends VBox {
                         controller.handleLoadFile();
                     } catch (Exception e) {
                         throw new RuntimeException(e);
-                    } finally{}
+                    }
                 }
                 else if(item == saveItem){
                     try {
