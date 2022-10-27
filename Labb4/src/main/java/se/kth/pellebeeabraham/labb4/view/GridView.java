@@ -18,8 +18,9 @@ public class GridView extends Pane {
     private MatrixHandler matrixHandler;
     private int number;
     private boolean clear;
+    private Controller controller;
 
-    public GridView(MatrixHandler matrixHandler) {
+    public GridView(MatrixHandler matrixHandler, Controller controller) {
         this.matrixHandler = matrixHandler;
         clear = false;
 
@@ -32,7 +33,7 @@ public class GridView extends Pane {
 
         this.getChildren().add(numberPane);
 
-        //numberPane.requestFocus();
+        this.controller = controller;
 
     }
 
@@ -114,12 +115,7 @@ public class GridView extends Pane {
                 numberTiles[row][col].addEventHandler(MouseEvent.MOUSE_CLICKED, tileClickHandler);
             }
         }
-        for(int row2 = 0;row2 < 9;row2++) {
-            for(int col2 = 0;col2 < 9;col2++){
-                System.out.print(matrixHandler.getResultMatrix().getSquare(row2, col2).getSquareValue());
-            }
-            System.out.print("\n");
-        }
+        controller.handleGameOver();
     }
 
     public int getNumber() {
@@ -146,13 +142,11 @@ public class GridView extends Pane {
                 for(int col = 0; col < GRID_SIZE; col++) {
                     if(((Label) event.getSource()).getId().equals(numberTiles[row][col].getId())) {
                         if(clear) {
-                            matrixHandler.removeNumberFromSquare(row, col);
-                            clear = false;
+                            controller.handleClearSquare(row, col);
                         }
                         else {
-                            matrixHandler.addNumberToSquare(row, col, number);
+                            controller.handleAddNumber(row, col, number);
                         }
-                        update();
                         return;
                     }
                 }

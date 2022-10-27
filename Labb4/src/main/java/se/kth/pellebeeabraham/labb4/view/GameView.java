@@ -17,11 +17,12 @@ public class GameView extends BorderPane {
     private Button[] gameButtons;
     private VBox gameButtonPane;
     private MatrixHandler matrixHandler;
+    private Controller controller;
 
-    public GameView(MatrixHandler matrixHandler){
+    public GameView(MatrixHandler matrixHandler, Controller controller){
         this.matrixHandler = matrixHandler;
 
-        gridPane = new GridView(matrixHandler);
+        gridPane = new GridView(matrixHandler, controller);
         this.setCenter(gridPane);
 
         numberButtons = new Button[10];
@@ -34,6 +35,12 @@ public class GameView extends BorderPane {
         gameButtonPane = new VBox();
         makeGameButtonPane();
         this.setLeft(gameButtonPane);
+
+        this.controller = controller;
+    }
+
+    public GridView getGridPane() {
+        return gridPane;
     }
 
     private VBox makeNumberButtonPane(){
@@ -74,25 +81,23 @@ public class GameView extends BorderPane {
         public void handle(ActionEvent event) {
             Button button = (Button) event.getSource();
             for(int i = 0;i < 9;i++){
-                if(button == numberButtons[i]) gridPane.setNumber(i + 1);
+                if(button == numberButtons[i])
+                    controller.handleSetNumber(i + 1);// gridPane.setNumber(i + 1);
             }
-            if(button == numberButtons[9]) gridPane.setClear(true);
+            if(button == numberButtons[9])
+                controller.handleSetClear();// gridPane.setClear(true);
         }
     };
 
     private EventHandler<ActionEvent> gameButtonHandler = new EventHandler<ActionEvent>(){
         @Override
         public void handle(ActionEvent event) {
-            System.out.println("check1");
             Button button = (Button) event.getSource();
             if(button == gameButtons[0]) {
-                System.out.println("check2");
-                System.out.println(matrixHandler.isCorrect());
+                controller.handleCheck();
             }
             else if(button == gameButtons[1]) {
-                System.out.println("check3");
-                matrixHandler.giveHint();
-                gridPane.update();
+                controller.handleHint();
             }
         }
     };

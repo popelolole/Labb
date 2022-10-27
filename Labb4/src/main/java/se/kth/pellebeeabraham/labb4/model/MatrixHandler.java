@@ -1,15 +1,17 @@
 package se.kth.pellebeeabraham.labb4.model;
 
+import java.io.Serializable;
 import java.util.Random;
 
 import static se.kth.pellebeeabraham.labb4.model.SudokuUtilities.GRID_SIZE;
 import static se.kth.pellebeeabraham.labb4.model.SudokuUtilities.generateSudokuMatrix;
 
-public class MatrixHandler {
+public class MatrixHandler implements Serializable {
 
     private SquareMatrix playMatrix;
     private SquareMatrix resultMatrix;
     private int nrOfMoves;
+    private SudokuUtilities.SudokuLevel currentLevel;
 
     public MatrixHandler(SudokuUtilities.SudokuLevel level){
         reset(level);
@@ -17,6 +19,7 @@ public class MatrixHandler {
 
     public void reset(SudokuUtilities.SudokuLevel level){
         int intMatrix[][][] = generateSudokuMatrix(level);
+        this.currentLevel = level;
 
         playMatrix = intMatrixToSquareMatrix(
                 convert3DIntMatrixTo2DIntMatrix(intMatrix, 0));
@@ -24,6 +27,18 @@ public class MatrixHandler {
                 convert3DIntMatrixTo2DIntMatrix(intMatrix, 1));
 
         nrOfMoves = playMatrix.getNrOfNotChangeable();
+    }
+
+    public void reset(MatrixHandler matrixHandler){
+        playMatrix = matrixHandler.getPlayMatrix();
+        resultMatrix = matrixHandler.getResultMatrix();
+
+        currentLevel = matrixHandler.getCurrentLevel();
+        nrOfMoves = playMatrix.getNrOfNotChangeable();
+    }
+
+    public SudokuUtilities.SudokuLevel getCurrentLevel(){
+        return currentLevel;
     }
 
     public int[][] convert3DIntMatrixTo2DIntMatrix(int[][][] oldMatrix, int startOrResult){
@@ -85,6 +100,14 @@ public class MatrixHandler {
         return copy;
     }
 
+    public void clearPlayMatrix(){
+        for(int row = 0;row < GRID_SIZE;row++){
+            for(int col = 0;col < GRID_SIZE;col++){
+                if(playMatrix.isChangeable(row, col)) playMatrix.setSquare(row, col, 0);
+            }
+        }
+    }
+
     public boolean isGameOver(){
         if(nrOfMoves < GRID_SIZE * GRID_SIZE) return false;
         return true;
@@ -106,6 +129,7 @@ public class MatrixHandler {
     }
 
     public void giveHint(){
+        if(isGameOver()) return;
         int nrOfZeros = 0;
         for(int row = 0;row < GRID_SIZE;row++){
             for(int col = 0;col < GRID_SIZE;col++){

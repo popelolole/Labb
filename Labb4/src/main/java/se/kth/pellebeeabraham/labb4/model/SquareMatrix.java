@@ -1,9 +1,11 @@
 package se.kth.pellebeeabraham.labb4.model;
 
+import java.io.Serializable;
+
 import static se.kth.pellebeeabraham.labb4.model.Square.isLegalValue;
 import static se.kth.pellebeeabraham.labb4.model.SudokuUtilities.GRID_SIZE;
 
-public class SquareMatrix {
+public class SquareMatrix implements Serializable {
     private final Square[][] squares;
     private final boolean[][] changeableMatrix; //TODO: set in MatrixHandler.java
 
