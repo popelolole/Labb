@@ -5,8 +5,7 @@ import java.io.Serializable;
 public class Square implements Serializable {
     private int squareValue;
 
-    public Square(int squareValue) throws IllegalArgumentException{
-        isLegalValue(squareValue);
+    public Square(int squareValue) {
         this.squareValue = squareValue;
     }
 
@@ -16,10 +15,5 @@ public class Square implements Serializable {
 
     public void setSquareValue(int squareValue) {
         this.squareValue = squareValue;
-    }
-
-    public static void isLegalValue(int value) throws IllegalArgumentException{
-        if(value < 0 || value > 9) throw new
-                IllegalArgumentException("Illegal squareValue: " + value);
     }
 }
