@@ -2,7 +2,6 @@ package se.kth.pellebeeabraham.labb4.view;
 
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -25,7 +24,7 @@ public class GridView extends Pane {
         clear = false;
 
         numberTiles = new Label[GRID_SIZE][GRID_SIZE];
-        updateTiles();
+        initNumberTiles();
         // ...
 
         numberPane = makeNumberPane();
@@ -34,10 +33,11 @@ public class GridView extends Pane {
         this.getChildren().add(numberPane);
 
         //numberPane.requestFocus();
+
     }
 
     // called by constructor (only)
-    private final void updateTiles() {
+    private final void initNumberTiles() {
         Font font1 = Font.font("Monospaced", FontWeight.NORMAL, 20);
         Font font2 = Font.font("Monospaced", FontWeight.BOLD, 20);
 
@@ -56,15 +56,21 @@ public class GridView extends Pane {
                 else tile = new Label("");
                 tile.setPrefWidth(32);
                 tile.setPrefHeight(32);
-                if(matrixHandler.getPlayMatrix().getSquare(row, col).isChangeable())
+                /*if(matrixHandler.getPlayMatrix().getSquare(row, col).isChangeable())
                     tile.setFont(font1);
-                else tile.setFont(font2);
+                else */tile.setFont(font2);
                 tile.setAlignment(Pos.CENTER);
                 tile.setStyle("-fx-border-color: black; -fx-border-width: 0.5px;"); // css style
                 tile.addEventHandler(MouseEvent.MOUSE_CLICKED, tileClickHandler);
                 //tile.setOnMouseClicked(tileClickHandler); // add your custom event handler
                 // add new tile to grid
                 tile.setId("" + row + col);
+                /*tile.textProperty().addListener(new ChangeListener<String>() {
+                    @Override
+                    public void changed(ObservableValue<? extends String> ov, String t, String t1) {
+                        System.out.println("Label Text Changed");
+                    }
+                });*/
                 numberTiles[row][col] = tile;
             }
         }
@@ -105,6 +111,26 @@ public class GridView extends Pane {
         return root;
     }
 
+    public void update(){
+        for(int row = 0;row < GRID_SIZE;row++){
+            for(int col = 0;col < GRID_SIZE;col++){
+                //Label tile = new Label("");
+                if(matrixHandler.getPlayMatrix().getSquare(row, col).getSquareValue() != 0) {
+                    numberTiles[row][col].setText("" + matrixHandler.getPlayMatrix().getSquare(row, col).getSquareValue());
+                }
+                else numberTiles[row][col].setText("");
+
+                if(matrixHandler.getPlayMatrix().isChangeable(row, col)) {
+                    numberTiles[row][col].setFont(Font.font("Monospaced", FontWeight.NORMAL, 20));
+                }
+                else{
+                    numberTiles[row][col].setFont(Font.font("Monospaced", FontWeight.BOLD, 20));
+                }
+                numberTiles[row][col].addEventHandler(MouseEvent.MOUSE_CLICKED, tileClickHandler);
+            }
+        }
+    }
+
     public int getNumber() {
         return number;
     }
@@ -134,8 +160,7 @@ public class GridView extends Pane {
                         else {
                             matrixHandler.addNumberToSquare(row, col, number);
                         }
-                        updateTiles();
-                        numberTiles[row][col].requestFocus();
+                        update();
                         return;
                     }
                 }

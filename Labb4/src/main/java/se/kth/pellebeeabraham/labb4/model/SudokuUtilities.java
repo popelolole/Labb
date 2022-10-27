@@ -39,8 +39,7 @@ public class SudokuUtilities {
             number2 = rand.nextInt(9) + 1;
 
         }while(number1 == number2);
-        System.out.println(number1);
-        System.out.println(number2);
+
         int value;
 
         for(int row = 0;row < GRID_SIZE;row++){

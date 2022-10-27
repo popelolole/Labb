@@ -15,10 +15,12 @@ public class MatrixHandler {
 
     public void reset(SudokuUtilities.SudokuLevel level){
         int intMatrix[][][] = generateSudokuMatrix(level);
+
         playMatrix = intMatrixToSquareMatrix(
                 convert3DIntMatrixTo2DIntMatrix(intMatrix, 0));
         resultMatrix = intMatrixToSquareMatrix(
                 convert3DIntMatrixTo2DIntMatrix(intMatrix, 1));
+
         nrOfMoves = playMatrix.getNrOfNotChangeable();
     }
 
@@ -36,7 +38,11 @@ public class MatrixHandler {
         SquareMatrix squares = new SquareMatrix();
         for(int row = 0;row < GRID_SIZE;row++){
             for(int col = 0;col < GRID_SIZE;col++){
-                squares.setSquare(row, col, intMatrix[row][col]);
+                squares.createSquare(row, col, intMatrix[row][col]);
+                if(squares.getSquare(row, col).getSquareValue() == 0)
+                    squares.setChangeable(row, col, true);
+                else
+                    squares.setChangeable(row, col, false);
             }
         }
         return squares;
@@ -44,6 +50,7 @@ public class MatrixHandler {
 
     public boolean addNumberToSquare(int row, int col, int number){
         if(playMatrix.getSquare(row, col).getSquareValue() != 0) return false;
+        if(!playMatrix.isChangeable(row, col)) return false;
         playMatrix.setSquare(row, col, number);
         nrOfMoves++;
         return true;
@@ -58,7 +65,8 @@ public class MatrixHandler {
         SquareMatrix copy = new SquareMatrix();
         for(int row = 0;row < GRID_SIZE;row++){
             for(int col = 0;col < GRID_SIZE;col++){
-                copy.setSquare(row, col, playMatrix.getSquare(row, col).getSquareValue());
+                copy.createSquare(row, col, playMatrix.getSquare(row, col).getSquareValue());
+                copy.setChangeable(row, col, playMatrix.isChangeable(row, col));
             }
         }
         return copy;
@@ -68,7 +76,8 @@ public class MatrixHandler {
         SquareMatrix copy = new SquareMatrix();
         for(int row = 0;row < GRID_SIZE;row++){
             for(int col = 0;col < GRID_SIZE;col++){
-                copy.setSquare(row, col, resultMatrix.getSquare(row, col).getSquareValue());
+                copy.createSquare(row, col, resultMatrix.getSquare(row, col).getSquareValue());
+                copy.setChangeable(row, col, playMatrix.isChangeable(row, col));
             }
         }
         return copy;
