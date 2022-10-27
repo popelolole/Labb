@@ -25,14 +25,19 @@ public class MatrixHandler implements Serializable {
         reset(level);
     }
 
+    /**
+     * This method initializes a unique sudoku puzzle and two different matrixes,
+     * one matrix for showing in view and one for the end game.
+     * @param level The level, i.e. the difficulty of the sudoku puzzle.
+     */
     public void reset(SudokuUtilities.SudokuLevel level){
         int intMatrix[][][] = generateSudokuMatrix(level);
         this.currentLevel = level;
 
         playMatrix = intMatrixToSquareMatrix(
-                convert3DIntMatrixTo2DIntMatrix(intMatrix, 0));
+                convert3DTo2DMatrix(intMatrix, 0));
         resultMatrix = intMatrixToSquareMatrix(
-                convert3DIntMatrixTo2DIntMatrix(intMatrix, 1));
+                convert3DTo2DMatrix(intMatrix, 1));
 
         nrOfMoves = playMatrix.getNrOfNotChangeable();
     }
@@ -49,7 +54,14 @@ public class MatrixHandler implements Serializable {
         return currentLevel;
     }
 
-    public int[][] convert3DIntMatrixTo2DIntMatrix(int[][][] oldMatrix, int startOrResult){
+    /**
+     * Converts the default 3D matrix to playMatrix and resultMatrix.
+     * @param oldMatrix is the 3D matrix.
+     * @param startOrResult is a flag used to choose start and result
+     * values of the puzzle and put them to respective matrix.
+     * @return
+     */
+    private int[][] convert3DTo2DMatrix(int[][][] oldMatrix, int startOrResult){
         int[][] newMatrix = new int[GRID_SIZE][GRID_SIZE];
         for(int row = 0;row < GRID_SIZE;row++){
             for(int col = 0;col < GRID_SIZE;col++){
@@ -59,15 +71,11 @@ public class MatrixHandler implements Serializable {
         return newMatrix;
     }
 
-    public SquareMatrix intMatrixToSquareMatrix(int[][] intMatrix) {
+    private SquareMatrix intMatrixToSquareMatrix(int[][] intMatrix) {
         SquareMatrix squares = new SquareMatrix();
         for(int row = 0;row < GRID_SIZE;row++){
             for(int col = 0;col < GRID_SIZE;col++){
                 squares.createSquare(row, col, intMatrix[row][col]);
-                /*if(squares.getSquare(row, col).getSquareValue() == 0)
-                    squares.setChangeable(row, col, true);
-                else
-                    squares.setChangeable(row, col, false);*/
             }
         }
         return squares;
@@ -91,7 +99,6 @@ public class MatrixHandler implements Serializable {
         for(int row = 0;row < GRID_SIZE;row++){
             for(int col = 0;col < GRID_SIZE;col++){
                 copy.setSquare(row, col, playMatrix.getSquare(row, col));
-                //copy.setChangeable(row, col, playMatrix.isChangeable(row, col));
             }
         }
         return copy;
@@ -102,7 +109,6 @@ public class MatrixHandler implements Serializable {
         for(int row = 0;row < GRID_SIZE;row++){
             for(int col = 0;col < GRID_SIZE;col++){
                 copy.setSquare(row, col, resultMatrix.getSquare(row, col));
-                //copy.setChangeable(row, col, playMatrix.isChangeable(row, col));
             }
         }
         return copy;
@@ -137,6 +143,12 @@ public class MatrixHandler implements Serializable {
         return true;
     }
 
+    /**
+     * This method shows a random number to the puzzle.
+     * First it calculates how many zeros the matrix has,
+     * then it randomizes a number between 1 and the nrOfZeros.
+     * Lastly it chooses a zero spot depending on the randomized number.
+     */
     public void giveHint(){
         if(isGameOver()) return;
         int nrOfZeros = 0;

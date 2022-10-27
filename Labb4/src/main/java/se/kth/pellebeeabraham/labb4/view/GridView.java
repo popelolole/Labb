@@ -134,7 +134,6 @@ public class GridView extends Pane {
         this.clear = clear;
     }
 
-    //TODO: make addEventHandlers method, make controller
     private EventHandler<MouseEvent> tileClickHandler = new EventHandler<MouseEvent>() {
         @Override
         public void handle(MouseEvent event) {

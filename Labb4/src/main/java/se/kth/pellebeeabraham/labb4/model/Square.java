@@ -14,7 +14,7 @@ public class Square implements Serializable {
     private int squareValue;
     private boolean changeable;
 
-    public Square(int squareValue) {
+    Square(int squareValue) {
         this.squareValue = squareValue;
         if(squareValue == 0) changeable = true;
         else changeable = false;
