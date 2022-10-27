@@ -7,8 +7,6 @@ import se.kth.pellebeeabraham.labb4.model.MatrixHandler;
 import se.kth.pellebeeabraham.labb4.model.SudokuUtilities;
 import se.kth.pellebeeabraham.labb4.view.SudokuView;
 
-import java.util.List;
-
 public class Main extends Application {
 
     private MatrixHandler matrixHandler;
@@ -17,7 +15,6 @@ public class Main extends Application {
 
         matrixHandler = new MatrixHandler(SudokuUtilities.SudokuLevel.EASY);
 
-        //model = new Lines();
         SudokuView view = new SudokuView(matrixHandler, primaryStage);
 
         Scene scene = new Scene(view);
@@ -25,7 +22,7 @@ public class Main extends Application {
         primaryStage.sizeToScene();
         primaryStage.setResizable(false);
 
-        primaryStage.setTitle("Hello JavaFX!");
+        primaryStage.setTitle("Sudoku 2.0");
         primaryStage.show();
     }
 
