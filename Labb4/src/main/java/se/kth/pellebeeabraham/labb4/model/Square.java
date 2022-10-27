@@ -12,9 +12,12 @@ import java.io.Serializable;
 
 public class Square implements Serializable {
     private int squareValue;
+    private boolean changeable;
 
     public Square(int squareValue) {
         this.squareValue = squareValue;
+        if(squareValue == 0) changeable = true;
+        else changeable = false;
     }
 
     public int getSquareValue() {
@@ -23,5 +26,21 @@ public class Square implements Serializable {
 
     public void setSquareValue(int squareValue) {
         this.squareValue = squareValue;
+    }
+
+    public boolean isChangeable() {
+        return changeable;
+    }
+
+    public void setChangeable(boolean changeable) {
+        this.changeable = changeable;
+    }
+
+    @Override
+    public String toString() {
+        return "Square{" +
+                "squareValue=" + squareValue +
+                ", changeable=" + changeable +
+                '}';
     }
 }

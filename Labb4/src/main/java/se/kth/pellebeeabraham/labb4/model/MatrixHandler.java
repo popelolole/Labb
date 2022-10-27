@@ -64,18 +64,18 @@ public class MatrixHandler implements Serializable {
         for(int row = 0;row < GRID_SIZE;row++){
             for(int col = 0;col < GRID_SIZE;col++){
                 squares.createSquare(row, col, intMatrix[row][col]);
-                if(squares.getSquare(row, col).getSquareValue() == 0)
+                /*if(squares.getSquare(row, col).getSquareValue() == 0)
                     squares.setChangeable(row, col, true);
                 else
-                    squares.setChangeable(row, col, false);
+                    squares.setChangeable(row, col, false);*/
             }
         }
         return squares;
     }
 
     public boolean addNumberToSquare(int row, int col, int number){
-        if(playMatrix.getSquare(row, col).getSquareValue() != 0) return false;
-        if(!playMatrix.isChangeable(row, col)) return false;
+        if(playMatrix.getSquare(row, col).getSquareValue() != 0 ||
+                !playMatrix.getSquare(row,col).isChangeable()) return false;
         playMatrix.setSquare(row, col, number);
         nrOfMoves++;
         return true;
@@ -90,8 +90,8 @@ public class MatrixHandler implements Serializable {
         SquareMatrix copy = new SquareMatrix();
         for(int row = 0;row < GRID_SIZE;row++){
             for(int col = 0;col < GRID_SIZE;col++){
-                copy.createSquare(row, col, playMatrix.getSquare(row, col).getSquareValue());
-                copy.setChangeable(row, col, playMatrix.isChangeable(row, col));
+                copy.setSquare(row, col, playMatrix.getSquare(row, col));
+                //copy.setChangeable(row, col, playMatrix.isChangeable(row, col));
             }
         }
         return copy;
@@ -101,8 +101,8 @@ public class MatrixHandler implements Serializable {
         SquareMatrix copy = new SquareMatrix();
         for(int row = 0;row < GRID_SIZE;row++){
             for(int col = 0;col < GRID_SIZE;col++){
-                copy.createSquare(row, col, resultMatrix.getSquare(row, col).getSquareValue());
-                copy.setChangeable(row, col, playMatrix.isChangeable(row, col));
+                copy.setSquare(row, col, resultMatrix.getSquare(row, col));
+                //copy.setChangeable(row, col, playMatrix.isChangeable(row, col));
             }
         }
         return copy;
@@ -111,7 +111,7 @@ public class MatrixHandler implements Serializable {
     public void clearPlayMatrix(){
         for(int row = 0;row < GRID_SIZE;row++){
             for(int col = 0;col < GRID_SIZE;col++){
-                if(playMatrix.isChangeable(row, col)) playMatrix.setSquare(row, col, 0);
+                if(playMatrix.getSquare(row, col).isChangeable()) playMatrix.setSquare(row, col, 0);
             }
         }
         nrOfMoves = playMatrix.getNrOfNotChangeable();

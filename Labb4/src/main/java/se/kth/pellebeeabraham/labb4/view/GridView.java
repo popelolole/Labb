@@ -106,7 +106,7 @@ public class GridView extends Pane {
                 }
                 else numberTiles[row][col].setText("");
 
-                if(matrixHandler.getPlayMatrix().isChangeable(row, col)) {
+                if(matrixHandler.getPlayMatrix().getSquare(row, col).isChangeable()) {
                     numberTiles[row][col].setFont(Font.font("Monospaced", FontWeight.NORMAL, 20));
                 }
                 else{
