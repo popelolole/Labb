@@ -6,7 +6,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -142,14 +141,14 @@ public class SudokuView extends VBox {
         menuBar.getMenus().addAll(fileMenu, gameMenu, helpMenu);
     }
 
-    public void createFileChooser(){
+    private void createFileChooser(){
         fileChooser = new FileChooser();
         fileChooser.setTitle("Open Desired File");
         fileChooser.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter("Sudoku Files", "*.sudoku"));
     }
 
-    public File openFileChooser(){
+    public File loadFileChooser(){
         return(fileChooser.showOpenDialog(primaryStage));
     }
 

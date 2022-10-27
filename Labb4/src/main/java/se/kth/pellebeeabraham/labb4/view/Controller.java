@@ -1,7 +1,6 @@
 package se.kth.pellebeeabraham.labb4.view;
 
 import javafx.stage.Stage;
-import se.kth.pellebeeabraham.labb4.IO.TextFileReader;
 import se.kth.pellebeeabraham.labb4.model.MatrixHandler;
 import se.kth.pellebeeabraham.labb4.model.SudokuUtilities;
 
@@ -65,7 +64,7 @@ public class Controller {
     }
 
     public void handleLoadFile() throws IOException, FileNotFoundException,ClassNotFoundException {
-        sudokuFile = mainView.openFileChooser();
+        sudokuFile = mainView.loadFileChooser();
         MatrixHandler matrixHandlerFromFile = null;
         try {
             matrixHandlerFromFile = deSerializeFromFile(sudokuFile);
