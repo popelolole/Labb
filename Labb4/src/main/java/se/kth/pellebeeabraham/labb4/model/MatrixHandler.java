@@ -6,6 +6,14 @@ import java.util.Random;
 import static se.kth.pellebeeabraham.labb4.model.SudokuUtilities.GRID_SIZE;
 import static se.kth.pellebeeabraham.labb4.model.SudokuUtilities.generateSudokuMatrix;
 
+/**
+ * This class represents logic and data to handle a square matrix.
+ * A MatrixHandler contains information about the square matrix, and the objects of squares.
+ *
+ * @author Pelle Berggren, pellebe@kth.se
+ * @author Elias Abraham, eabraham@kth.se
+ */
+
 public class MatrixHandler implements Serializable {
 
     private SquareMatrix playMatrix;

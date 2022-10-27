@@ -5,6 +5,14 @@ import java.io.Serializable;
 import static se.kth.pellebeeabraham.labb4.model.Square.isLegalValue;
 import static se.kth.pellebeeabraham.labb4.model.SudokuUtilities.GRID_SIZE;
 
+/**
+ * This class represents logic and data for a square matrix, used to create objects of type Task.
+ * A Project contains information about the project, and a list of tasks.
+ *
+ * @author Pelle Berggren, pellebe@kth.se
+ * @author Elias Abraham, eabraham@kth.se
+ */
+
 public class SquareMatrix implements Serializable {
     private final Square[][] squares;
     private final boolean[][] changeableMatrix; //TODO: set in MatrixHandler.java
