@@ -48,8 +48,8 @@ public class GridView extends Pane {
                     tile = new Label("" + matrixHandler.getPlayMatrix().getSquare(row, col).getSquareValue());
                 }
                 else tile = new Label("");
-                tile.setPrefWidth(32);
-                tile.setPrefHeight(32);
+                tile.setPrefWidth(48);
+                tile.setPrefHeight(48);
                 tile.setFont(font);
                 tile.setAlignment(Pos.CENTER);
                 tile.setStyle("-fx-border-color: black; -fx-border-width: 0.5px;"); // css style
